@@ -1,0 +1,92 @@
+.letter {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.5rem;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 50%, #2b0f18 0%, #1A0A0F 80%);
+}
+
+.letter__bg-heart {
+  position: absolute;
+  font-size: 28rem;
+  color: rgba(200, 81, 107, 0.04);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.letter__card {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  width: 100%;
+  background: rgba(255, 250, 245, 0.04);
+  border: 1px solid rgba(200, 81, 107, 0.25);
+  border-radius: 18px;
+  padding: clamp(2rem, 6vw, 3.5rem);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.letter__eyebrow {
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  color: var(--blush);
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-bottom: 2rem;
+}
+
+.letter__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.letter__greeting {
+  font-family: var(--font-script);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--rose);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.letter__paragraph {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  line-height: 1.85;
+  color: var(--cream);
+  opacity: 0.92;
+}
+
+.letter__signoff {
+  font-family: var(--font-script);
+  font-size: clamp(1.4rem, 3.2vw, 1.8rem);
+  color: var(--rose);
+  text-align: right;
+  margin-top: 0.6rem;
+}
+
+.letter__seal {
+  margin: 1.8rem auto 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--rose);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--rose);
+  text-shadow: 0 0 16px rgba(200, 81, 107, 0.8);
+}

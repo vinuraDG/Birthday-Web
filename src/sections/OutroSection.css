@@ -1,0 +1,77 @@
+.outro {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, #3d1525 0%, #150810 80%);
+  padding: 4rem 1.5rem;
+}
+
+.outro__confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+}
+
+.outro__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 560px;
+}
+
+.outro__heart {
+  font-size: 2.4rem;
+  color: var(--rose);
+  text-shadow: 0 0 30px rgba(200, 81, 107, 0.8);
+  margin-bottom: 0.4rem;
+}
+
+.outro__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 8vw, 4.5rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.05;
+}
+
+.outro__name {
+  font-family: var(--font-script);
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  color: var(--rose);
+  font-weight: 700;
+  text-shadow: 0 0 40px rgba(200, 81, 107, 0.5);
+  margin-bottom: 0.8rem;
+}
+
+.outro__message {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+  color: var(--blush);
+  line-height: 1.7;
+  opacity: 0.92;
+  margin-top: 0.6rem;
+}
+
+.outro__signature {
+  font-family: var(--font-script);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  color: var(--gold);
+  margin-top: 1.2rem;
+}

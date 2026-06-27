@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --rose:          #C8516B;
+  --blush:         #F2B8C0;
+  --deep:          #1A0A0F;
+  --dark:          #2D1420;
+  --gold:          #D4A847;
+  --cream:         #FDF6F0;
+  --white:         #FFFFFF;
+
+  --font-display:  'Cormorant Garamond', serif;
+  --font-script:   'Dancing Script', cursive;
+  --font-body:     'Montserrat', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--deep);
+  color: var(--cream);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 2px; }

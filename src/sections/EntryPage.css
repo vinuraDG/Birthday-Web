@@ -1,0 +1,161 @@
+/* ── Main Perspective Wrapper ── */
+.gate-wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999; /* Ensure it stays completely on top */
+  perspective: 1500px; 
+  overflow: hidden;
+  background: var(--deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Cinematic Door Panels ── */
+.gate-door {
+  position: absolute;
+  top: 0;
+  width: 50.5%; /* Overlap eliminates center gaps */
+  height: 100%;
+  z-index: 10;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.gate-door--left {
+  left: 0;
+  transform-origin: left center;
+}
+
+.gate-door--right {
+  right: 0;
+  transform-origin: right center;
+}
+
+.gate-door__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, var(--dark) 0%, var(--deep) 100%);
+  border: 1px solid rgba(200, 81, 107, 0.15);
+}
+
+/* Luxury Divider Seam Lines */
+.gate-door__pattern {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--rose), transparent);
+}
+.gate-door--left .gate-door__pattern { right: 0; }
+.gate-door--right .gate-door__pattern { left: 0; }
+
+/* ── UI Center Interface ── */
+.gate-interface {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  pointer-events: auto;
+}
+
+.gate-lock-container {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gate-lock__glow {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(200, 81, 107, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: lock-glow-pulse 3s infinite ease-in-out;
+}
+
+.gate-lock__content {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  background: rgba(45, 20, 32, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 81, 107, 0.4);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.gate-lock__content:hover {
+  border-color: var(--rose);
+  box-shadow: 0 0 30px rgba(200, 81, 107, 0.4);
+}
+
+.gate-lock__monogram {
+  font-family: var(--font-script);
+  font-size: 2.2rem;
+  color: var(--cream);
+  line-height: 1;
+}
+
+.gate-lock__label {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blush);
+  margin: 4px 0;
+  text-align: center;
+}
+
+.gate-lock__v-line {
+  width: 1px;
+  height: 15px;
+  background: linear-gradient(to bottom, transparent, var(--rose));
+}
+
+/* ── Typography Styling ── */
+.gate-intro-text {
+  text-align: center;
+}
+
+.gate-heading {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--cream);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+.gate-subheading {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--blush);
+  opacity: 0.8;
+  letter-spacing: 0.15em;
+  margin-top: 6px;
+}
+
+/* Disables interactions smoothly during transformation loops */
+.gate-wrapper.is-open {
+  pointer-events: none;
+}
+
+@keyframes lock-glow-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.15); opacity: 0.7; }
+}
