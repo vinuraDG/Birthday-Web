@@ -7,7 +7,7 @@
   z-index: 999999; /* Ensure it stays completely on top */
   perspective: 1500px; 
   overflow: hidden;
-  background: var(--deep);
+  background: var(--deep, #110509);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +38,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, var(--dark) 0%, var(--deep) 100%);
+  background: radial-gradient(circle at center, var(--dark, #2d0b17) 0%, var(--deep, #110509) 100%);
   border: 1px solid rgba(200, 81, 107, 0.15);
 }
 
@@ -48,7 +48,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, transparent, var(--rose), transparent);
+  background: linear-gradient(to bottom, transparent, var(--rose, #e65c7b), transparent);
 }
 .gate-door--left .gate-door__pattern { right: 0; }
 .gate-door--right .gate-door__pattern { left: 0; }
@@ -60,17 +60,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
   pointer-events: auto;
+  width: 90%;
+  max-width: 400px;
 }
 
 .gate-lock-container {
   position: relative;
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .gate-lock-container {
+    width: 160px;
+    height: 160px;
+  }
 }
 
 .gate-lock__glow {
@@ -84,8 +93,8 @@
 
 .gate-lock__content {
   position: relative;
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   background: rgba(45, 20, 32, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -100,32 +109,58 @@
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
+@media (min-width: 768px) {
+  .gate-lock__content {
+    width: 130px;
+    height: 130px;
+  }
+}
+
 .gate-lock__content:hover {
-  border-color: var(--rose);
+  border-color: var(--rose, #e65c7b);
   box-shadow: 0 0 30px rgba(200, 81, 107, 0.4);
 }
 
 .gate-lock__monogram {
-  font-family: var(--font-script);
-  font-size: 2.2rem;
-  color: var(--cream);
+  font-family: var(--font-script, serif);
+  font-size: 1.8rem;
+  color: var(--cream, #fcf8f5);
   line-height: 1;
 }
 
+@media (min-width: 768px) {
+  .gate-lock__monogram {
+    font-size: 2.2rem;
+  }
+}
+
 .gate-lock__label {
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--blush);
+  color: var(--blush, #f7a0b1);
   margin: 4px 0;
   text-align: center;
 }
 
+@media (min-width: 768px) {
+  .gate-lock__label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+  }
+}
+
 .gate-lock__v-line {
   width: 1px;
-  height: 15px;
-  background: linear-gradient(to bottom, transparent, var(--rose));
+  height: 12px;
+  background: linear-gradient(to bottom, transparent, var(--rose, #e65c7b));
+}
+
+@media (min-width: 768px) {
+  .gate-lock__v-line {
+    height: 15px;
+  }
 }
 
 /* ── Typography Styling ── */
@@ -134,20 +169,33 @@
 }
 
 .gate-heading {
-  font-family: var(--font-display);
-  font-size: 2.2rem;
-  color: var(--cream);
+  font-family: var(--font-display, serif);
+  font-size: 1.6rem;
+  color: var(--cream, #fcf8f5);
   font-weight: 400;
   letter-spacing: 0.05em;
 }
 
+@media (min-width: 768px) {
+  .gate-heading {
+    font-size: 2.2rem;
+  }
+}
+
 .gate-subheading {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--blush);
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.75rem;
+  color: var(--blush, #f7a0b1);
   opacity: 0.8;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   margin-top: 6px;
+}
+
+@media (min-width: 768px) {
+  .gate-subheading {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+  }
 }
 
 /* Disables interactions smoothly during transformation loops */

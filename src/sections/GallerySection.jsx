@@ -40,48 +40,49 @@ const photoFiles = [
 
 const totalPhotos = photoFiles.length
 
-const photos = photoFiles.map((file, i) => {
-  // 1. Shift the mathematical starting point to the top cleft instead of the bottom point
-  const t = (i / totalPhotos) * 2 * Math.PI + Math.PI; 
-  
-  // 2. Refined parametric heart equations
-  const x = 16 * Math.pow(Math.sin(t), 3)
-  const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t)
-  
-  // 3. Perfect aspect mapping scale
-  const left = 50 + x * 2.35
-  const top = 48 - y * 2.15 
+function generatePhotos(isMobile) {
+  // Define mapping multipliers dynamically based on screen configurations
+  const scaleX = isMobile ? 2.15 : 2.35
+  const scaleY = isMobile ? 1.95 : 2.15
+  const centerTop = isMobile ? 46 : 48
 
-  const tilts = [-4, 3, -2, 5, -3, 2, -5, 4, -1, 3]
-  const tilt = tilts[i % tilts.length]
+  return photoFiles.map((file, i) => {
+    const t = (i / totalPhotos) * 2 * Math.PI + Math.PI; 
+    
+    const x = 16 * Math.pow(Math.sin(t), 3)
+    const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t)
+    
+    const left = 50 + x * scaleX
+    const top = centerTop - y * scaleY 
 
-  // 4. FIX: Symmetrical Stacking Flow
-  // This shifts the highest z-index to the top lobes, cascading down sequentially 
-  // on both sides so they overlap beautifully down to the bottom point.
-  const distanceFromTop = Math.abs(i - Math.floor(totalPhotos / 2))
-  const baseZIndex = Math.floor(totalPhotos - distanceFromTop)
+    const tilts = [-4, 3, -2, 5, -3, 2, -5, 4, -1, 3]
+    const tilt = tilts[i % tilts.length]
 
-  return {
-    id: i,
-    src: new URL(`../assets/photos/${file}`, import.meta.url).href,
-    style: {
-      left: `${left}%`,
-      top: `${top}%`,
-      '--rot': `${tilt}deg`,
-      zIndex: baseZIndex 
-    },
-    tilt
-  }
-})
+    const distanceFromTop = Math.abs(i - Math.floor(totalPhotos / 2))
+    const baseZIndex = Math.floor(totalPhotos - distanceFromTop)
+
+    return {
+      id: i,
+      src: new URL(`../assets/photos/${file}`, import.meta.url).href,
+      style: {
+        left: `${left}%`,
+        top: `${top}%`,
+        '--rot': `${tilt}deg`,
+        zIndex: baseZIndex 
+      },
+      tilt
+    }
+  })
+}
 
 function FloatingHearts() {
-  const items = Array.from({ length: 18 }, (_, i) => ({
+  const items = Array.from({ length: 14 }, (_, i) => ({
     id: i,
     char: ['♥', '♡', '❤', '♥'][i % 4],
-    left: `${5 + (i * 6.8) % 90}%`,
-    delay: `${(i * 0.45) % 7}s`,
-    duration: `${9 + (i * 0.7) % 6}s`,
-    size: `${0.6 + (i * 0.08) % 0.65}rem`,
+    left: `${5 + (i * 7.5) % 90}%`,
+    delay: `${(i * 0.5) % 6}s`,
+    duration: `${9 + (i * 0.8) % 6}s`,
+    size: `${0.6 + (i * 0.08) % 0.5}rem`,
   }))
   return (
     <div className="gallery__hearts-bg" aria-hidden="true">
@@ -97,6 +98,8 @@ function FloatingHearts() {
 
 export default function GallerySection() {
   const containerRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+  const [hoveredId, setHoveredId] = useState(null)
   
   const glowX = useMotionValue(0)
   const glowY = useMotionValue(0)
@@ -104,8 +107,17 @@ export default function GallerySection() {
   const springY = useSpring(glowY, { stiffness: 120, damping: 25 })
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 650)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
     const container = containerRef.current
-    if (!container) return
+    if (!container || isMobile) return
 
     const handleMouseMove = (e) => {
       const rect = container.getBoundingClientRect()
@@ -115,17 +127,21 @@ export default function GallerySection() {
 
     container.addEventListener('mousemove', handleMouseMove)
     return () => container.removeEventListener('mousemove', handleMouseMove)
-  }, [glowX, glowY])
+  }, [glowX, glowY, isMobile])
+
+  const localizedPhotos = generatePhotos(isMobile)
 
   return (
     <section className="gallery" id="gallery" ref={containerRef}>
       <FloatingHearts />
       <div className="gallery__ambient-aurora" />
 
-      <motion.div 
-        className="gallery__cursor-glow" 
-        style={{ left: springX, top: springY }}
-      />
+      {!isMobile && (
+        <motion.div 
+          className="gallery__cursor-glow" 
+          style={{ left: springX, top: springY }}
+        />
+      )}
 
       <motion.div
         className="gallery__header"
@@ -147,7 +163,7 @@ export default function GallerySection() {
           <motion.path
             d="M 50,29 C 59,10 88,14 88,43 C 88,67 50,88 50,88 C 50,88 12,67 12,43 C 12,14 41,10 50,29 Z"
             fill="none"
-            stroke="rgba(230, 92, 123, 0.18)"
+            stroke="rgba(230, 92, 123, 0.14)"
             strokeWidth="0.5"
             strokeDasharray="4 3"
             initial={{ pathLength: 0 }}
@@ -159,49 +175,57 @@ export default function GallerySection() {
 
         <div className="gallery__heart-glow" />
         
-        {photos.map((photo, i) => (
-          <motion.div
-            key={photo.id}
-            className="gallery__card"
-            style={photo.style}
-            initial={{ opacity: 0, scale: 0.3, rotate: photo.tilt - 15 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: photo.tilt }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{
-              duration: 0.85,
-              delay: i * 0.035,
-              ease: [0.34, 1.6, 0.64, 1]
-            }}
-            whileHover={{ 
-              scale: 1.85, 
-              rotate: 0,
-              zIndex: 999, 
-              transition: { duration: 0.25, ease: 'easeOut' }
-            }}
-          >
-            <div className="gallery__card-inner">
-              <div className="gallery__card-glare" />
-              <div className="gallery__photo-frame">
-                <img
-                  src={photo.src}
-                  alt={`Memory ${i + 1}`}
-                  loading="lazy"
-                  draggable={false}
-                />
+        {localizedPhotos.map((photo, i) => {
+          const isHovered = hoveredId === photo.id
+          return (
+            <motion.div
+              key={photo.id}
+              className="gallery__card"
+              style={{
+                ...photo.style,
+                zIndex: isHovered ? 9999 : photo.style.zIndex
+              }}
+              initial={{ opacity: 0, scale: 0.3, rotate: photo.tilt - 15 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: photo.tilt }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{
+                opacity: { duration: 0.5, delay: i * 0.02 },
+                scale: { type: 'spring', stiffness: 100, damping: 15, delay: i * 0.02 },
+                rotate: { type: 'spring', stiffness: 100, damping: 15, delay: i * 0.02 }
+              }}
+              whileHover={{ 
+                scale: isMobile ? 2.1 : 1.85, 
+                rotate: 0,
+                transition: { duration: 0.25, ease: 'easeOut' }
+              }}
+              onHoverStart={() => setHoveredId(photo.id)}
+              onHoverEnd={() => setHoveredId(null)}
+              onTouchStart={() => setHoveredId(photo.id)}
+            >
+              <div className="gallery__card-inner">
+                <div className="gallery__card-glare" />
+                <div className="gallery__photo-frame">
+                  <img
+                    src={photo.src}
+                    alt={`Memory ${i + 1}`}
+                    loading="lazy"
+                    draggable={false}
+                  />
+                </div>
+                <div className="gallery__card-footer">
+                  <span className="gallery__card-index">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="gallery__card-heart">♥</span>
+                </div>
               </div>
-              <div className="gallery__card-footer">
-                <span className="gallery__card-index">{String(i + 1).padStart(2, '0')}</span>
-                <span className="gallery__card-heart">♥</span>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          )
+        })}
       </div>
 
       <motion.p
         className="gallery__hint"
         initial={{ opacity: 0, letterSpacing: '0.1em' }}
-        whileInView={{ opacity: 0.5, letterSpacing: '0.3em' }}
+        whileInView={{ opacity: 0.5, letterSpacing: '0.25em' }}
         viewport={{ once: true }}
         transition={{ delay: 0.6, duration: 1.2 }}
       >
