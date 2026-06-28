@@ -41,19 +41,23 @@ const photoFiles = [
 const totalPhotos = photoFiles.length
 
 function generatePhotos(isMobile) {
-  // Balanced responsive parameters preventing clumped overlap layouts
-  const scaleX = isMobile ? 2.3 : 2.45
-  const scaleY = isMobile ? 2.1 : 2.25
-  const centerTop = isMobile ? 48 : 50
+  const scaleX = isMobile ? 2.4 : 2.45
+  const scaleY = isMobile ? 2.45 : 2.25
+  const centerTop = isMobile ? 45 : 50
+
+  // The heart curve x ranges −16 to +16, but card physical width means
+  // leftmost cards bleed past the container edge before overflow:hidden clips them.
+  // Shifting the anchor left by ~3% on mobile re-centers the visual heart.
+  const leftAnchor = isMobile ? 44 : 49
 
   return photoFiles.map((file, i) => {
-    const t = (i / totalPhotos) * 2 * Math.PI + Math.PI; 
-    
+    const t = (i / totalPhotos) * 2 * Math.PI + Math.PI
+
     const x = 16 * Math.pow(Math.sin(t), 3)
-    const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t)
-    
-    const left = 50 + x * scaleX
-    const top = centerTop - y * scaleY 
+    const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)
+
+    const left = leftAnchor + x * scaleX
+    const top = centerTop - y * scaleY
 
     const tilts = [-4, 3, -2, 5, -3, 2, -5, 4, -1, 3]
     const tilt = tilts[i % tilts.length]
@@ -68,7 +72,7 @@ function generatePhotos(isMobile) {
         left: `${left}%`,
         top: `${top}%`,
         '--rot': `${tilt}deg`,
-        zIndex: baseZIndex 
+        zIndex: baseZIndex
       },
       tilt
     }
@@ -100,7 +104,7 @@ export default function GallerySection() {
   const containerRef = useRef(null)
   const [isMobile, setIsMobile] = useState(false)
   const [activeId, setActiveId] = useState(null)
-  
+
   const glowX = useMotionValue(0)
   const glowY = useMotionValue(0)
   const springX = useSpring(glowX, { stiffness: 120, damping: 25 })
@@ -137,8 +141,8 @@ export default function GallerySection() {
       <div className="gallery__ambient-aurora" />
 
       {!isMobile && (
-        <motion.div 
-          className="gallery__cursor-glow" 
+        <motion.div
+          className="gallery__cursor-glow"
           style={{ left: springX, top: springY }}
         />
       )}
@@ -174,7 +178,7 @@ export default function GallerySection() {
         </svg>
 
         <div className="gallery__heart-glow" />
-        
+
         {localizedPhotos.map((photo, i) => {
           const isActive = activeId === photo.id
           return (
@@ -193,16 +197,13 @@ export default function GallerySection() {
                 scale: { type: 'spring', stiffness: 120, damping: 14, delay: i * 0.015 },
                 rotate: { type: 'spring', stiffness: 120, damping: 14, delay: i * 0.015 }
               }}
-              // Desktop hover handling
-              whileHover={!isMobile ? { 
-                scale: 1.9, 
+              whileHover={!isMobile ? {
+                scale: 1.9,
                 rotate: 0,
                 transition: { duration: 0.2, ease: 'easeOut' }
               } : {}}
               onHoverStart={!isMobile ? () => setActiveId(photo.id) : undefined}
               onHoverEnd={!isMobile ? () => setActiveId(null) : undefined}
-              
-              // Mobile interaction maps to Tap states
               whileTap={isMobile ? {
                 scale: 2.4,
                 rotate: 0,
