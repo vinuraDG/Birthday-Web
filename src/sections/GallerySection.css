@@ -1,7 +1,7 @@
 /* ── Section Canvas Layout ── */
 .gallery {
   position: relative;
-  padding: 4rem 0.5rem 5rem;
+  padding: 3rem 0.25rem 4rem;
   background: radial-gradient(ellipse at 50% 0%, #2d0b17 0%, #110509 60%, #080204 100%);
   overflow: hidden;
   display: flex;
@@ -20,13 +20,13 @@
 /* Ambient secondary backdrop glow */
 .gallery__ambient-aurora {
   position: absolute;
-  width: 80vw;
-  height: 60vh;
-  top: 20%;
-  left: 10%;
-  background: radial-gradient(circle, rgba(230, 92, 123, 0.05) 0%, transparent 70%);
+  width: 90vw;
+  height: 50vh;
+  top: 25%;
+  left: 5%;
+  background: radial-gradient(circle, rgba(230, 92, 123, 0.04) 0%, transparent 70%);
   pointer-events: none;
-  filter: blur(60px);
+  filter: blur(50px);
   z-index: 0;
 }
 
@@ -40,7 +40,7 @@
   pointer-events: none;
   z-index: 1;
   will-change: left, top;
-  display: none; /* Hidden on non-pointer devices by default */
+  display: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -68,42 +68,35 @@
 
 @keyframes gallery-floatUp {
   0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.7); }
-  15% { opacity: 0.35; filter: drop-shadow(0 0 6px rgba(230, 92, 123, 0.4)); }
-  85% { opacity: 0.15; }
-  100% { opacity: 0; transform: translateY(-112vh) rotate(35deg) scale(1.15); }
+  15% { opacity: 0.3; filter: drop-shadow(0 0 4px rgba(230, 92, 123, 0.3)); }
+  85% { opacity: 0.12; }
+  100% { opacity: 0; transform: translateY(-105vh) rotate(30deg) scale(1.1); }
 }
 
 /* ── Header Segment ── */
 .gallery__header {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   position: relative;
-  z-index: 2;
+  z-index: 5;
   padding: 0 1rem;
-}
-
-@media (min-width: 768px) {
-  .gallery__header {
-    margin-bottom: 2rem;
-  }
 }
 
 .gallery__eyebrow-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 0.4rem;
+  gap: 0.4rem;
+  margin-bottom: 0.3rem;
 }
 
 .gallery__eyebrow {
   font-family: var(--font-body, sans-serif);
   font-weight: 400;
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
   color: var(--blush, #f7a0b1);
   text-transform: uppercase;
-  text-shadow: 0 0 8px rgba(247, 160, 177, 0.2);
 }
 
 @media (min-width: 768px) {
@@ -114,8 +107,8 @@
 }
 
 .gallery__eyebrow-dot {
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   background: var(--rose, #e65c7b);
   border-radius: 50%;
   opacity: 0.6;
@@ -123,25 +116,25 @@
 
 .gallery__title {
   font-family: var(--font-script, serif);
-  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-size: clamp(1.8rem, 7vw, 3.8rem);
   color: var(--cream, #fcf8f5);
   font-weight: 500;
-  text-shadow: 0 0 40px rgba(230, 92, 123, 0.4);
+  text-shadow: 0 0 30px rgba(230, 92, 123, 0.35);
 }
 
 /* ── Heart Matrix Vector Container ── */
 .gallery__heart-container {
   position: relative;
   z-index: 3;
-  width: min(95vw, 1050px);
-  aspect-ratio: 1.2 / 1; /* Squarer on mobile helps layout structure passives */
-  margin: 1rem 0;
+  width: min(96vw, 1150px);
+  aspect-ratio: 1.1 / 1; 
+  margin: 1.5rem auto;
 }
 
 @media (min-width: 768px) {
   .gallery__heart-container {
     aspect-ratio: 1.45 / 1;
-    margin: 1.5rem 0;
+    margin: 2rem auto;
   }
 }
 
@@ -156,10 +149,10 @@
 
 .gallery__heart-glow {
   position: absolute;
-  width: 40%;
-  height: 40%;
-  background: radial-gradient(circle, rgba(230, 92, 123, 0.16) 0%, transparent 75%);
-  top: 48%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(230, 92, 123, 0.12) 0%, transparent 75%);
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -169,22 +162,22 @@
 /* ── Premium Polaroid Architecture ── */
 .gallery__card {
   position: absolute;
-  width: 13.5%; /* Fluid mobile base profile */
-  aspect-ratio: 1 / 1.18;
+  width: 17%; /* Larger scale structural layout footprint base for mobile screens */
+  aspect-ratio: 1 / 1.2;
   transform: translate(-50%, -50%) rotate(var(--rot));
   transform-origin: center center;
   will-change: transform, z-index;
   z-index: 2;
-  touch-action: manipulation;
+  touch-action: none;
 }
 
-@media (min-width: 501px) and (max-width: 820px) {
+@media (min-width: 600px) and (max-width: 1024px) {
   .gallery__card {
-    width: 11.5%;
+    width: 13%;
   }
 }
 
-@media (min-width: 821px) {
+@media (min-width: 1025px) {
   .gallery__card {
     width: 9.2%;
   }
@@ -196,28 +189,26 @@
   height: 100%;
   background: #fcf8f5;
   border-radius: 2px;
-  padding: 5% 5% 20%;
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.35), 
-    0 16px 36px rgba(0, 0, 0, 0.3);
+  padding: 6% 6% 22%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.25s ease;
 }
 
 @media (min-width: 768px) {
   .gallery__card-inner {
     border-radius: 4px;
     padding: 6.5% 6.5% 22%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), 0 16px 36px rgba(0, 0, 0, 0.3);
   }
 }
 
-/* Luxury card edge refraction line */
 .gallery__card-glare {
   position: absolute;
   inset: 0;
   z-index: 3;
-  background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -226,7 +217,7 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: 1px;
   background: #110509;
 }
 
@@ -235,19 +226,18 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: brightness(0.92) contrast(1.02) sepia(0.05);
-  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: brightness(0.95) contrast(1.01);
   pointer-events: none;
   user-select: none;
 }
 
-/* Footer context indices on Polaroid bases */
+/* Footer context info on Polaroids */
 .gallery__card-footer {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 20%;
+  height: 22%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -256,71 +246,47 @@
   font-family: var(--font-body, sans-serif);
 }
 
-@media (min-width: 768px) {
-  .gallery__card-footer {
-    height: 22%;
-    padding: 0 10%;
-  }
-}
-
 .gallery__card-index {
-  font-size: clamp(0.35rem, 0.8vw, 0.7rem);
+  font-size: clamp(0.32rem, 1vw, 0.7rem);
   font-weight: 500;
-  color: rgba(17, 5, 9, 0.35);
+  color: rgba(17, 5, 9, 0.4);
 }
 
 .gallery__card-heart {
-  font-size: clamp(0.4rem, 0.9vw, 0.75rem);
+  font-size: clamp(0.38rem, 1.2vw, 0.75rem);
   color: var(--rose, #e65c7b);
-  opacity: 0.15;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0.2;
 }
 
-/* ── Active Interactive State ── */
-.gallery__card:hover .gallery__card-inner,
-.gallery__card:focus .gallery__card-inner {
+/* ── Active Focus / Hover / Tap Interactivity States ── */
+.gallery__card.is-active .gallery__card-inner,
+.gallery__card:hover .gallery__card-inner {
   box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.65), 
-    0 0 0 1px rgba(230, 92, 123, 0.35),
-    0 0 20px rgba(230, 92, 123, 0.25);
+    0 15px 35px rgba(0, 0, 0, 0.65), 
+    0 0 0 1px rgba(230, 92, 123, 0.4),
+    0 0 20px rgba(230, 92, 123, 0.3);
 }
 
-@media (min-width: 768px) {
-  .gallery__card:hover .gallery__card-inner {
-    box-shadow: 
-      0 30px 60px rgba(0, 0, 0, 0.65), 
-      0 0 0 1px rgba(230, 92, 123, 0.35),
-      0 0 30px rgba(230, 92, 123, 0.25);
-  }
+.gallery__card.is-active img,
+.gallery__card:hover img {
+  filter: brightness(1.04) contrast(1.02);
 }
 
-.gallery__card:hover img,
-.gallery__card:focus img {
-  filter: brightness(1.05) contrast(1.05) sepia(0);
-}
-
-.gallery__card:hover .gallery__card-heart,
-.gallery__card:focus .gallery__card-heart {
+.gallery__card.is-active .gallery__card-heart,
+.gallery__card:hover .gallery__card-heart {
   opacity: 1;
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 4px rgba(230, 92, 123, 0.5));
+  transform: scale(1.15);
 }
 
 /* ── Hint Meta Copy ── */
 .gallery__hint {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   font-family: var(--font-body, sans-serif);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   text-transform: uppercase;
   color: var(--blush, #f7a0b1);
   text-align: center;
   position: relative;
-  z-index: 2;
-}
-
-@media (min-width: 768px) {
-  .gallery__hint {
-    margin-top: 2.5rem;
-    font-size: 0.72rem;
-  }
+  z-index: 5;
+  opacity: 0.6;
 }

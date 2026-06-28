@@ -6,7 +6,7 @@
   justify-content: center;
   overflow: hidden;
   background: radial-gradient(ellipse at 50% 40%, #3d1525 0%, #150810 80%);
-  padding: 4rem 1.5rem;
+  padding: 4rem 1rem;
 }
 
 .outro__confetti {
@@ -30,12 +30,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
+  gap: clamp(0.4rem, 1.5vh, 0.8rem);
+  width: 100%;
   max-width: 560px;
 }
 
 .outro__heart {
-  font-size: 2.4rem;
+  font-size: clamp(2rem, 6vw, 3rem);
   color: var(--rose);
   text-shadow: 0 0 30px rgba(200, 81, 107, 0.8);
   margin-bottom: 0.4rem;
@@ -43,35 +44,44 @@
 
 .outro__title {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 8vw, 4.5rem);
+  font-size: clamp(2.4rem, 7.5vw, 4.2rem); /* Fluid responsive design */
   font-weight: 300;
   font-style: italic;
   color: var(--cream);
-  line-height: 1.05;
+  line-height: 1.1;
 }
 
 .outro__name {
   font-family: var(--font-script);
-  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  font-size: clamp(2.2rem, 8vw, 4rem);
   color: var(--rose);
   font-weight: 700;
   text-shadow: 0 0 40px rgba(200, 81, 107, 0.5);
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.4rem;
 }
 
 .outro__message {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
   color: var(--blush);
   line-height: 1.7;
   opacity: 0.92;
   margin-top: 0.6rem;
+  padding: 0 0.5rem; /* Prevents text elements hitting mobile screen bezels */
 }
 
 .outro__signature {
   font-family: var(--font-script);
-  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
   color: var(--gold);
-  margin-top: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+/* Reduces structural overhead of particle loops on performance-constrained mobile screens */
+@media (max-width: 768px) {
+  /* This prevents layout shifts or side-scrolling on mobile devices if items flip scale axes */
+  .outro__content {
+    padding: 0 1rem;
+  }
 }

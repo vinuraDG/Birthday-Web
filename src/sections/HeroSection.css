@@ -21,16 +21,17 @@
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 35%, var(--wine-glow) 0%, var(--dark-void) 75%);
-  padding: 4rem 1.5rem 0;
+  background: radial-gradient(circle at 50% 35%, var(--wine-glow) 0%, var(--dark-void) 80%);
+  padding: 3rem 1rem 0;
+  box-sizing: border-box;
 }
 
 /* ── Interactive Parallax Canvas ── */
 .hero__parallax-bg-wrapper {
   position: absolute;
-  inset: -40px; /* Expands bounds slightly so parallax doesn't clip edge boundaries */
-  width: calc(100% + 80px);
-  height: calc(100% + 80px);
+  inset: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
   pointer-events: none;
   z-index: 0;
 }
@@ -38,9 +39,9 @@
 .hero__sparkle-overlay {
   position: absolute;
   inset: 0;
-  opacity: 0.08;
+  opacity: 0.05;
   background-image: radial-gradient(circle at 50% 50%, white 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-size: 32px 32px;
 }
 
 .hero__hearts {
@@ -52,14 +53,13 @@
   position: absolute;
   user-select: none;
   will-change: transform, opacity;
-  text-shadow: 0 0 10px currentColor;
 }
 
-/* ── Cinematic Dark Vignette ── */
+/* Cinematic Vignette */
 .hero__vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 20%, rgba(17, 5, 9, 0.6) 60%, var(--dark-void) 100%);
+  background: radial-gradient(circle at center, transparent 30%, rgba(17, 5, 9, 0.5) 70%, var(--dark-void) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -72,122 +72,133 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.8rem;
-  margin-auto: auto;
-  margin-top: 5vh;
+  gap: 0.6rem;
+  margin: auto auto 0;
 }
 
-/* ── Animated Eyebrow Header ── */
+/* ── Eyebrow Header ── */
 .hero__eyebrow-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.6rem;
   opacity: 0;
 }
 
 .hero__eyebrow {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.85rem;
+  font-size: 0.68rem;
   color: var(--blush);
   text-transform: uppercase;
-  text-shadow: 0 0 8px rgba(247, 160, 177, 0.3);
+  letter-spacing: 0.15em;
+}
+
+@media (min-width: 768px) {
+  .hero__eyebrow-container { gap: 1rem; }
+  .hero__eyebrow { font-size: 0.85rem; letter-spacing: 0.3em; }
 }
 
 .hero__eyebrow-line {
   display: block;
-  width: 30px;
+  width: 20px;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--blush));
 }
+@media (min-width: 768px) { .hero__eyebrow-line { width: 40px; } }
+
 .hero__eyebrow-container span:last-child {
   background: linear-gradient(-90deg, transparent, var(--blush));
 }
 
-/* ── Premium Typography Entry Masks ── */
+/* ── Typography Entry Masks ── */
 .hero__title-mask, .hero__name-mask {
   overflow: hidden;
-  padding: 0.2rem 1rem;
+  padding: 0.1rem 0.5rem;
 }
 
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 9vw, 6.5rem);
+  font-size: clamp(2.3rem, 8vw, 6.5rem);
   font-weight: 300;
   font-style: italic;
   color: var(--cream);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 
 .hero__name {
   font-family: var(--font-script);
-  font-size: clamp(3.5rem, 10vw, 6rem);
+  font-size: clamp(2.6rem, 9vw, 6rem);
   color: var(--rose);
   font-weight: 500;
-  line-height: 0.95;
-  margin-top: -0.2rem;
-  text-shadow: 0 0 45px rgba(230, 92, 123, 0.45), 0 0 90px rgba(230, 92, 123, 0.2);
+  line-height: 1;
+  margin-top: -0.1rem;
+  text-shadow: 0 0 30px rgba(230, 92, 123, 0.4);
 }
 
-/* ── Intricate Pulse Heart Vector ── */
+/* ── Heart Pulse Box ── */
 .hero__heart-pulse-box {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0.5rem 0;
+  margin: 0.2rem 0;
+}
+
+@media (min-width: 768px) {
+  .hero__heart-pulse-box { width: 70px; height: 70px; margin: 0.5rem 0; }
 }
 
 .hero__heart-svg-trail {
   position: absolute;
   width: 100%;
   height: 100%;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .hero__heart-icon {
-  font-size: 2.2rem;
+  font-size: 1.6rem;
   color: var(--rose);
   z-index: 2;
-  cursor: default;
   user-select: none;
 }
+@media (min-width: 768px) { .hero__heart-icon { font-size: 2.2rem; } }
 
-/* ── Text Copy & Subtitle ── */
+/* ── Copy Subtitle ── */
 .hero__subtitle {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-size: clamp(0.95rem, 2vw, 1.3rem);
   color: var(--blush);
-  max-width: 520px;
-  line-height: 1.7;
-  opacity: 0.85;
-  margin-top: 0.5rem;
+  max-width: 88vw;
+  line-height: 1.6;
+  opacity: 0.8;
 }
+@media (min-width: 768px) { .hero__subtitle { max-width: 500px; } }
 
-/* ── Glassmorphic Glowing Button ── */
+/* ── Glassmorphic Button ── */
 .hero__cta {
   position: relative;
   display: inline-block;
-  margin-top: 1.8rem;
-  padding: 0.9rem 2.6rem;
-  border: 1px solid rgba(230, 92, 123, 0.5);
-  border-radius: 50px;
+  margin-top: 1rem;
+  padding: 0.75rem 2.2rem;
+  border: 1px solid rgba(230, 92, 123, 0.4);
+  border-radius: 40px;
   color: var(--cream);
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   text-decoration: none;
-  background: rgba(45, 11, 23, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(45, 11, 23, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   overflow: hidden;
-  transition: border 0.4s ease;
+}
+@media (min-width: 768px) {
+  .hero__cta { padding: 0.9rem 2.6rem; font-size: 0.85rem; margin-top: 1.5rem; }
 }
 
 .hero__cta span {
@@ -201,54 +212,53 @@
   z-index: 1;
   opacity: 0;
   background: linear-gradient(135deg, var(--rose), #ff8fa3);
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hero__cta:hover {
-  border-color: rgba(255, 243, 245, 0.8);
+  transition: opacity 0.3s ease;
 }
 
 .hero__cta:hover .hero__cta-glow {
   opacity: 1;
 }
 
-/* ── Interactive Image Collage Strip ── */
+/* ── Image Collage Strip ── */
 .hero__collage {
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: 900px;
-  margin-top: 4rem;
+  max-width: 850px;
+  margin-top: 2.5rem;
 }
+@media (min-width: 768px) { .hero__collage { margin-top: 4rem; } }
 
 .collage-strip {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 1.2rem;
-  padding: 0 1rem;
+  gap: 0.4rem;
+  padding: 0 0.5rem;
 }
+@media (min-width: 768px) { .collage-strip { gap: 1.2rem; } }
 
 .collage-strip__item {
   position: relative;
-  border-radius: 16px 16px 0 0;
+  border-radius: 12px 12px 0 0;
   overflow: hidden;
   flex-shrink: 0;
   background: var(--wine-glow);
-  border: 3px solid rgba(255, 243, 245, 0.15);
+  border: 2px solid rgba(255, 243, 245, 0.12);
   border-bottom: none;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   transform-origin: bottom center;
-  cursor: pointer;
-  will-change: transform, box-shadow;
+  will-change: transform;
+}
+@media (min-width: 768px) {
+  .collage-strip__item { border-radius: 16px 16px 0 0; border-width: 3px; }
 }
 
-/* Subtle overlay glint reflection on cards */
 .collage-strip__glass-glint {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(0,0,0,0.1) 100%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -257,31 +267,19 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: saturate(0.95) contrast(1.02);
-  transition: filter 0.3s ease;
+  pointer-events: none;
 }
 
-.collage-strip__item:hover img {
-  filter: saturate(1.1) contrast(1.05);
-}
+/* Structural Aspect Ratios & Mobile Transformations */
+.collage-strip__item--0 { width: clamp(62px, 11vw, 120px); height: clamp(90px, 15vw, 160px); transform: rotate(-5deg) translateY(12px); }
+.collage-strip__item--1 { width: clamp(72px, 13vw, 145px); height: clamp(110px, 19vw, 200px); transform: rotate(-2.5deg) translateY(5px); }
+.collage-strip__item--2 { width: clamp(88px, 16vw, 170px); height: clamp(130px, 23vw, 240px); transform: rotate(0deg); border-color: rgba(230, 92, 123, 0.35); }
+.collage-strip__item--3 { width: clamp(72px, 13vw, 145px); height: clamp(110px, 19vw, 200px); transform: rotate(2.5deg) translateY(5px); }
+.collage-strip__item--4 { width: clamp(62px, 11vw, 120px); height: clamp(90px, 15vw, 160px); transform: rotate(5deg) translateY(12px); }
 
-/* Explicit aspect sizing & structural dynamic tilts */
-.collage-strip__item--0 { width: clamp(80px, 12vw, 120px); height: clamp(110px, 16vw, 160px); transform: rotate(-6deg) translateY(15px); }
-.collage-strip__item--1 { width: clamp(95px, 14vw, 145px); height: clamp(135px, 20vw, 200px); transform: rotate(-3deg) translateY(6px); }
-.collage-strip__item--2 { width: clamp(115px, 17vw, 170px); height: clamp(165px, 24vw, 240px); transform: rotate(0deg); border-color: rgba(230, 92, 123, 0.4); }
-.collage-strip__item--3 { width: clamp(95px, 14vw, 145px); height: clamp(135px, 20vw, 200px); transform: rotate(3deg) translateY(6px); }
-.collage-strip__item--4 { width: clamp(80px, 12vw, 120px); height: clamp(110px, 16vw, 160px); transform: rotate(6deg) translateY(15px); }
-
-/* Mobile optimization adjustments */
-@media (max-width: 600px) {
-  .collage-strip {
-    gap: 0.5rem;
-  }
-  .collage-strip__item {
-    border-width: 2px;
-  }
-  .collage-strip__item--0 { transform: rotate(-4deg) translateY(10px); }
-  .collage-strip__item--1 { transform: rotate(-2deg) translateY(4px); }
-  .collage-strip__item--3 { transform: rotate(2deg) translateY(4px); }
-  .collage-strip__item--4 { transform: rotate(4deg) translateY(10px); }
+@media (min-width: 768px) {
+  .collage-strip__item--0 { transform: rotate(-6deg) translateY(15px); }
+  .collage-strip__item--1 { transform: rotate(-3deg) translateY(6px); }
+  .collage-strip__item--3 { transform: rotate(3deg) translateY(6px); }
+  .collage-strip__item--4 { transform: rotate(6deg) translateY(15px); }
 }

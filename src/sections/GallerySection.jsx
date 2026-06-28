@@ -41,10 +41,10 @@ const photoFiles = [
 const totalPhotos = photoFiles.length
 
 function generatePhotos(isMobile) {
-  // Define mapping multipliers dynamically based on screen configurations
-  const scaleX = isMobile ? 2.15 : 2.35
-  const scaleY = isMobile ? 1.95 : 2.15
-  const centerTop = isMobile ? 46 : 48
+  // Balanced responsive parameters preventing clumped overlap layouts
+  const scaleX = isMobile ? 2.3 : 2.45
+  const scaleY = isMobile ? 2.1 : 2.25
+  const centerTop = isMobile ? 48 : 50
 
   return photoFiles.map((file, i) => {
     const t = (i / totalPhotos) * 2 * Math.PI + Math.PI; 
@@ -76,13 +76,13 @@ function generatePhotos(isMobile) {
 }
 
 function FloatingHearts() {
-  const items = Array.from({ length: 14 }, (_, i) => ({
+  const items = Array.from({ length: 10 }, (_, i) => ({
     id: i,
     char: ['♥', '♡', '❤', '♥'][i % 4],
-    left: `${5 + (i * 7.5) % 90}%`,
-    delay: `${(i * 0.5) % 6}s`,
-    duration: `${9 + (i * 0.8) % 6}s`,
-    size: `${0.6 + (i * 0.08) % 0.5}rem`,
+    left: `${5 + (i * 11) % 90}%`,
+    delay: `${(i * 0.7) % 5}s`,
+    duration: `${8 + (i * 1.1) % 6}s`,
+    size: `${0.6 + (i * 0.08) % 0.4}rem`,
   }))
   return (
     <div className="gallery__hearts-bg" aria-hidden="true">
@@ -99,7 +99,7 @@ function FloatingHearts() {
 export default function GallerySection() {
   const containerRef = useRef(null)
   const [isMobile, setIsMobile] = useState(false)
-  const [hoveredId, setHoveredId] = useState(null)
+  const [activeId, setActiveId] = useState(null)
   
   const glowX = useMotionValue(0)
   const glowY = useMotionValue(0)
@@ -108,7 +108,7 @@ export default function GallerySection() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 650)
+      setIsMobile(window.innerWidth < 768)
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
@@ -145,10 +145,10 @@ export default function GallerySection() {
 
       <motion.div
         className="gallery__header"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
       >
         <div className="gallery__eyebrow-wrapper">
           <span className="gallery__eyebrow-dot"></span>
@@ -163,44 +163,54 @@ export default function GallerySection() {
           <motion.path
             d="M 50,29 C 59,10 88,14 88,43 C 88,67 50,88 50,88 C 50,88 12,67 12,43 C 12,14 41,10 50,29 Z"
             fill="none"
-            stroke="rgba(230, 92, 123, 0.14)"
-            strokeWidth="0.5"
+            stroke="rgba(230, 92, 123, 0.16)"
+            strokeWidth="0.6"
             strokeDasharray="4 3"
             initial={{ pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 2.2, ease: 'easeInOut' }}
+            transition={{ duration: 2, ease: 'easeInOut' }}
           />
         </svg>
 
         <div className="gallery__heart-glow" />
         
         {localizedPhotos.map((photo, i) => {
-          const isHovered = hoveredId === photo.id
+          const isActive = activeId === photo.id
           return (
             <motion.div
               key={photo.id}
-              className="gallery__card"
+              className={`gallery__card ${isActive ? 'is-active' : ''}`}
               style={{
                 ...photo.style,
-                zIndex: isHovered ? 9999 : photo.style.zIndex
+                zIndex: isActive ? 9999 : photo.style.zIndex
               }}
-              initial={{ opacity: 0, scale: 0.3, rotate: photo.tilt - 15 }}
+              initial={{ opacity: 0, scale: 0.5, rotate: photo.tilt - 10 }}
               whileInView={{ opacity: 1, scale: 1, rotate: photo.tilt }}
-              viewport={{ once: true, margin: '-20px' }}
+              viewport={{ once: true, margin: '-40px' }}
               transition={{
-                opacity: { duration: 0.5, delay: i * 0.02 },
-                scale: { type: 'spring', stiffness: 100, damping: 15, delay: i * 0.02 },
-                rotate: { type: 'spring', stiffness: 100, damping: 15, delay: i * 0.02 }
+                opacity: { duration: 0.4, delay: i * 0.015 },
+                scale: { type: 'spring', stiffness: 120, damping: 14, delay: i * 0.015 },
+                rotate: { type: 'spring', stiffness: 120, damping: 14, delay: i * 0.015 }
               }}
-              whileHover={{ 
-                scale: isMobile ? 2.1 : 1.85, 
+              // Desktop hover handling
+              whileHover={!isMobile ? { 
+                scale: 1.9, 
                 rotate: 0,
-                transition: { duration: 0.25, ease: 'easeOut' }
-              }}
-              onHoverStart={() => setHoveredId(photo.id)}
-              onHoverEnd={() => setHoveredId(null)}
-              onTouchStart={() => setHoveredId(photo.id)}
+                transition: { duration: 0.2, ease: 'easeOut' }
+              } : {}}
+              onHoverStart={!isMobile ? () => setActiveId(photo.id) : undefined}
+              onHoverEnd={!isMobile ? () => setActiveId(null) : undefined}
+              
+              // Mobile interaction maps to Tap states
+              whileTap={isMobile ? {
+                scale: 2.4,
+                rotate: 0,
+                transition: { duration: 0.15 }
+              } : {}}
+              onTapStart={isMobile ? () => setActiveId(photo.id) : undefined}
+              onTapCancel={isMobile ? () => setActiveId(null) : undefined}
+              onTap={isMobile ? () => setTimeout(() => setActiveId(null), 1500) : undefined}
             >
               <div className="gallery__card-inner">
                 <div className="gallery__card-glare" />
@@ -225,11 +235,11 @@ export default function GallerySection() {
       <motion.p
         className="gallery__hint"
         initial={{ opacity: 0, letterSpacing: '0.1em' }}
-        whileInView={{ opacity: 0.5, letterSpacing: '0.25em' }}
+        whileInView={{ opacity: 0.5, letterSpacing: '0.2em' }}
         viewport={{ once: true }}
-        transition={{ delay: 0.6, duration: 1.2 }}
+        transition={{ delay: 0.4, duration: 1 }}
       >
-        every frame, a feeling
+        {isMobile ? "tap frames to bring them closer" : "hover frames to explore details"}
       </motion.p>
     </section>
   )
